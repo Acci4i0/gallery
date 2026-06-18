@@ -1,0 +1,7 @@
+# OS cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Reference assets, not part of the site (large screen-recording reel)
+*.mov
