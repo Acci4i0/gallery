@@ -1,0 +1,206 @@
+/* The chrome's real typeface: PP Neue Montreal Mono, the font the original
+   site (malikkotb.com) ships. Served from its public repo via the jsDelivr
+   GitHub CDN; system monospace is the fallback if the CDN is unreachable.
+   (To vendor it for full offline/Pages stability, drop the .otf in ./fonts/
+   and point this src at it.) */
+@font-face {
+  font-family: "PP Neue Montreal Mono";
+  src: url("https://cdn.jsdelivr.net/gh/malikkotb/new-portfolio-2025@main/app/fonts/PPNeueMontrealMono-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  background: #ffffff;
+  overflow: hidden;
+  /* Stop the browser hijacking drag gestures over the canvas. */
+  overscroll-behavior: none;
+}
+
+/* The original's signature orange text-selection. */
+::selection {
+  background: #ff6b00;
+  color: #000000;
+}
+
+/* Full-bleed WebGL canvas. */
+#app {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+
+#app canvas {
+  display: block;
+}
+
+/* Shared monospace look for the chrome and the contact overlay. */
+.chrome,
+.contact {
+  font-family: "PP Neue Montreal Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* Chrome (header) overlay.
+   difference blend keeps the text legible on white and over photos alike. */
+.chrome {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  padding: 20px 24px;
+  pointer-events: none;
+  color: #ffffff;
+  mix-blend-mode: difference;
+}
+
+.chrome a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.chrome__name {
+  position: absolute;
+  top: 20px;
+  left: 24px;
+  pointer-events: auto;
+}
+
+.chrome__nav {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  display: flex;
+  gap: 18px;
+}
+
+.chrome__nav a {
+  pointer-events: auto;
+}
+
+/* Keyboard focus stays visible despite the blend mode. */
+.chrome a:focus-visible,
+.contact a:focus-visible,
+.contact__close:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+.chrome__hint {
+  position: absolute;
+  bottom: 20px;
+  left: 24px;
+  margin: 0;
+  color: #808080;
+  /* the hint reads as plain grey, not blended */
+  mix-blend-mode: normal;
+}
+
+/* Load spinner — centered, fades away with the first texture. */
+.spinner {
+  position: fixed;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  width: 28px;
+  height: 28px;
+  margin: -14px 0 0 -14px;
+  border: 2px solid rgba(0, 0, 0, 0.12);
+  border-top-color: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.spinner[hidden] {
+  display: none;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Contact overlay: full-bleed backdrop that dims the field + a centered panel. */
+.contact {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.82);
+}
+
+.contact[hidden] {
+  display: none;
+}
+
+.contact__panel {
+  position: relative;
+  padding: 40px 56px;
+}
+
+.contact__close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  padding: 4px;
+  border: 0;
+  background: none;
+  color: #111111;
+  font: inherit;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.contact__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 14px;
+}
+
+.contact__list li {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.contact__key {
+  color: #808080;
+  width: 1.4em;
+}
+
+.contact a {
+  color: #111111;
+  text-decoration: none;
+}
+
+.contact a:hover {
+  text-decoration: underline;
+}
+
+/* Mobile: drop the nav, keep the name. */
+@media (max-width: 600px) {
+  .chrome__nav {
+    display: none;
+  }
+}

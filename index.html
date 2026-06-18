@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<!-- Rebuild study of malik.url by Malik Kotb. Original concept and design © Malik Kotb. Rebuilt for study purposes. -->
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Andrea Lando — Photo Field</title>
+  <meta name="description" content="Rebuild study of Malik Kotb's photo-field portfolio, with my own photos." />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <!-- WebGL renders into this container; it sits behind the chrome. -->
+  <div id="app" aria-hidden="true"></div>
+
+  <!-- Brief load spinner, hidden once the first texture is ready. -->
+  <div id="spinner" class="spinner" aria-hidden="true"></div>
+
+  <!-- Chrome overlay. pointer-events:none so the canvas keeps the mouse,
+       except for the links, which re-enable pointer-events. -->
+  <header class="chrome">
+    <a class="chrome__name" href="#">Andrea Lando</a>
+    <nav class="chrome__nav" aria-label="Primary">
+      <a href="#">Info</a>
+      <a href="#">Work</a>
+      <a href="#">Lab</a>
+      <a id="contact-link" href="#">Contact</a>
+    </nav>
+    <p class="chrome__hint">muovi il mouse · trascina · hover</p>
+  </header>
+
+  <!-- Contact overlay: full-bleed backdrop (click to close) + centered panel. -->
+  <div id="contact" class="contact" hidden>
+    <div class="contact__panel" role="dialog" aria-modal="true" aria-label="Contact">
+      <button class="contact__close" type="button" aria-label="Chiudi">×</button>
+      <ul class="contact__list">
+        <li><span class="contact__key">m.</span><a href="mailto:lando.andrea04@gmail.com">lando.andrea04@gmail.com</a></li>
+        <li><span class="contact__key">i.</span><a href="https://instagram.com/andrelndo" target="_blank" rel="noopener">@andrelndo</a></li>
+        <!-- TODO: replace "#" with the project repo / GitHub Pages URL once it exists. -->
+        <li><span class="contact__key">©</span><a href="#">2026</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Libraries via CDN only (relative-path-safe, no build step). -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+  <!-- Chrome behavior: open/close the Contact overlay. Kept here so the field
+       module stays purely about the 3D scene. -->
+  <script>
+    (function () {
+      const trigger = document.getElementById('contact-link');
+      const overlay = document.getElementById('contact');
+      const closeButton = overlay.querySelector('.contact__close');
+
+      const open = () => { overlay.hidden = false; };
+      const close = () => { overlay.hidden = true; };
+
+      trigger.addEventListener('click', (event) => { event.preventDefault(); open(); });
+      closeButton.addEventListener('click', close);
+      overlay.addEventListener('click', (event) => { if (event.target === overlay) close(); });
+      document.addEventListener('keydown', (event) => { if (event.key === 'Escape') close(); });
+    })();
+  </script>
+
+  <!-- The field. ES module: imports MEDIA from media.js. -->
+  <script type="module" src="./js/photo-field.js"></script>
+</body>
+</html>
