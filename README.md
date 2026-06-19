@@ -11,4 +11,4 @@ Come l'originale: le foto galleggiano nello spazio su fondo bianco, la dimension
 - `js/media.js` — elenco delle foto (una riga per immagine; aggiungerne una = file in `photos/` + una riga qui).
 - `photos/` — le immagini (24, attualmente placeholder).
 - `galleria.md` — specifica del progetto.
-- `CREDITS.md` — crediti e attribuzione.
+
